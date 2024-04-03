@@ -3,6 +3,8 @@ package com.adoejosld.basiclayoutscodelab
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -10,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.paddingFromBaseline
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
@@ -21,6 +24,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
@@ -38,7 +42,11 @@ class MainActivity : ComponentActivity() {
                 Column(modifier = Modifier) {
                     SearchBar(modifier = Modifier)
                     Spacer(modifier = Modifier.height(12.dp))
-                    AlignYourBodyElement(modifier = Modifier)
+                    AlignYourBodyElement(
+                        drawable = R.drawable.ab1_inversions,
+                        text = R.string.ab1_inversions,
+                        modifier = Modifier
+                    )
                 }
             }
         }
@@ -71,19 +79,27 @@ fun SearchBar(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun AlignYourBodyElement(modifier: Modifier = Modifier) {
-    Column(modifier = modifier) {
+fun AlignYourBodyElement(
+    @DrawableRes drawable: Int,
+    @StringRes text: Int,
+    modifier: Modifier = Modifier
+) {
+    Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = modifier) {
         Image(
-            painter = painterResource(id = R.drawable.ab1_inversions),
+            painter = painterResource(drawable),
             contentDescription = null,
-            contentScale = ContentScale.FillBounds,
+            contentScale = ContentScale.Crop,
             modifier = Modifier
                 .size(88.dp)
                 .clip(
                     CircleShape
                 )
         )
-        Text(text = stringResource(id = R.string.ab1_inversions))
+        Text(
+            text = stringResource(text),
+            modifier = Modifier.paddingFromBaseline(top = 24.dp, bottom = 8.dp),
+            style = MaterialTheme.typography.bodyMedium
+        )
     }
 }
 
@@ -102,7 +118,11 @@ fun SearchBarPreview() {
 fun AlignYourBodyElementPreview() {
     BasicLayoutsCodelabTheme {
         Surface {
-            AlignYourBodyElement(modifier = Modifier)
+            AlignYourBodyElement(
+                drawable = R.drawable.ab1_inversions,
+                text = R.string.ab1_inversions,
+                modifier = Modifier
+            )
         }
     }
 }
