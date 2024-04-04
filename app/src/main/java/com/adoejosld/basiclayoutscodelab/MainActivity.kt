@@ -7,6 +7,7 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -14,6 +15,7 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.paddingFromBaseline
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
@@ -45,6 +47,12 @@ class MainActivity : ComponentActivity() {
                     AlignYourBodyElement(
                         drawable = R.drawable.ab1_inversions,
                         text = R.string.ab1_inversions,
+                        modifier = Modifier
+                    )
+                    Spacer(modifier = Modifier.height(12.dp))
+                    FavoriteCollectionCard(
+                        drawable = R.drawable.fc2_nature_meditations,
+                        text = R.string.fc2_nature_meditations,
                         modifier = Modifier
                     )
                 }
@@ -104,24 +112,67 @@ fun AlignYourBodyElement(
 }
 
 @Composable
-@Preview(showBackground = true, widthDp = 320)
-fun SearchBarPreview() {
-    BasicLayoutsCodelabTheme {
-        Surface {
-            SearchBar(modifier = Modifier)
+fun FavoriteCollectionCard(
+    @DrawableRes drawable: Int,
+    @StringRes text: Int,
+    modifier: Modifier = Modifier
+) {
+    Surface(
+        shape = MaterialTheme.shapes.medium,
+        color = MaterialTheme.colorScheme.surfaceVariant,
+        modifier = modifier
+    ) {
+        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.width(255.dp)) {
+            Image(
+                painterResource(id = drawable),
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .size(80.dp)
+                    .clip(CircleShape)
+            )
+            Text(
+                text = stringResource(id = text),
+                style = MaterialTheme.typography.titleMedium,
+                modifier = Modifier.padding(16.dp)
+            )
         }
     }
 }
 
 @Composable
-@Preview(showBackground = true, widthDp = 320)
+@Preview(showBackground = true, backgroundColor = 0xFFF5F0EE)
+fun SearchBarPreview() {
+    BasicLayoutsCodelabTheme {
+        Surface {
+            SearchBar(modifier = Modifier.padding(10.dp))
+        }
+    }
+}
+
+@Composable
+@Preview(showBackground = true, backgroundColor = 0xFFF5F0EE)
 fun AlignYourBodyElementPreview() {
     BasicLayoutsCodelabTheme {
         Surface {
             AlignYourBodyElement(
                 drawable = R.drawable.ab1_inversions,
                 text = R.string.ab1_inversions,
-                modifier = Modifier
+                modifier = Modifier.padding(10.dp)
+            )
+        }
+    }
+}
+
+@Composable
+@Preview(showBackground = true, backgroundColor = 0xFFF5F0EE)
+fun FavoriteCollectionCardPreview() {
+    BasicLayoutsCodelabTheme {
+        Surface {
+            FavoriteCollectionCard(
+                drawable = R.drawable.fc2_nature_meditations,
+                text = R.string.fc2_nature_meditations,
+                modifier = Modifier.padding(10.dp)
             )
         }
     }
