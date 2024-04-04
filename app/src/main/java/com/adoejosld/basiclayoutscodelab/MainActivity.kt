@@ -6,7 +6,9 @@ import androidx.activity.compose.setContent
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,6 +18,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.paddingFromBaseline
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
@@ -44,11 +48,7 @@ class MainActivity : ComponentActivity() {
                 Column(modifier = Modifier) {
                     SearchBar(modifier = Modifier)
                     Spacer(modifier = Modifier.height(12.dp))
-                    AlignYourBodyElement(
-                        drawable = R.drawable.ab1_inversions,
-                        text = R.string.ab1_inversions,
-                        modifier = Modifier
-                    )
+                    AlignYourBodyRow(modifier = Modifier)
                     Spacer(modifier = Modifier.height(12.dp))
                     FavoriteCollectionCard(
                         drawable = R.drawable.fc2_nature_meditations,
@@ -111,6 +111,42 @@ fun AlignYourBodyElement(
     }
 }
 
+private val alignYourBodyData = listOf(
+    R.drawable.ab1_inversions to R.string.ab1_inversions,
+    R.drawable.ab2_quick_yoga to R.string.ab2_quick_yoga,
+    R.drawable.ab3_stretching to R.string.ab3_stretching,
+    R.drawable.ab4_tabata to R.string.ab4_tabata,
+    R.drawable.ab5_hiit to R.string.ab5_hiit,
+    R.drawable.ab6_pre_natal_yoga to R.string.ab6_pre_natal_yoga
+).map { DrawableStringPair(it.first, it.second) }
+
+private val favoriteCollectionsData = listOf(
+    R.drawable.fc1_short_mantras to R.string.fc1_short_mantras,
+    R.drawable.fc2_nature_meditations to R.string.fc2_nature_meditations,
+    R.drawable.fc3_stress_and_anxiety to R.string.fc3_stress_and_anxiety,
+    R.drawable.fc4_self_massage to R.string.fc4_self_massage,
+    R.drawable.fc5_overwhelmed to R.string.fc5_overwhelmed,
+    R.drawable.fc6_nightly_wind_down to R.string.fc6_nightly_wind_down
+).map { DrawableStringPair(it.first, it.second) }
+
+private data class DrawableStringPair(
+    @DrawableRes val drawable: Int,
+    @StringRes val text: Int
+)
+
+@Composable
+fun AlignYourBodyRow(modifier: Modifier = Modifier) {
+    LazyRow(
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        contentPadding = PaddingValues(12.dp),
+        modifier = modifier
+    ) {
+        items(alignYourBodyData) { item ->
+            AlignYourBodyElement(item.drawable, item.text)
+        }
+    }
+}
+
 @Composable
 fun FavoriteCollectionCard(
     @DrawableRes drawable: Int,
@@ -140,6 +176,7 @@ fun FavoriteCollectionCard(
     }
 }
 
+// BLOQUE DE LAS VISTAS PREVIAS
 @Composable
 @Preview(showBackground = true, backgroundColor = 0xFFF5F0EE)
 fun SearchBarPreview() {
@@ -152,12 +189,10 @@ fun SearchBarPreview() {
 
 @Composable
 @Preview(showBackground = true, backgroundColor = 0xFFF5F0EE)
-fun AlignYourBodyElementPreview() {
+fun AlignYourBodyRowPreview() {
     BasicLayoutsCodelabTheme {
         Surface {
-            AlignYourBodyElement(
-                drawable = R.drawable.ab1_inversions,
-                text = R.string.ab1_inversions,
+            AlignYourBodyRow(
                 modifier = Modifier.padding(10.dp)
             )
         }
