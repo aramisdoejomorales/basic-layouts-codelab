@@ -48,18 +48,24 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             BasicLayoutsCodelabTheme {
-                Column(modifier = Modifier) {
-                    SearchBar(modifier = Modifier)
-                    Spacer(modifier = Modifier.height(12.dp))
-                    HomeSection(title = R.string.align_your_body) {
-                        AlignYourBodyRow(modifier = Modifier)
-                    }
-                    HomeSection(title = R.string.favorite_collections) {
-                        FavoriteCollectionsGrid(modifier = Modifier)
-                    }
-                }
+                HomeScreen()
             }
         }
+    }
+}
+
+@Composable
+fun HomeScreen(modifier: Modifier = Modifier) {
+    Column(modifier) {
+        Spacer(modifier = Modifier.height(16.dp))
+        SearchBar(modifier = Modifier.padding(horizontal = 12.dp))
+        HomeSection(title = R.string.align_your_body) {
+            AlignYourBodyRow(modifier = Modifier)
+        }
+        HomeSection(title = R.string.favorite_collections) {
+            FavoriteCollectionsGrid(modifier = Modifier)
+        }
+        Spacer(modifier = Modifier.height(16.dp))
     }
 }
 
@@ -218,28 +224,9 @@ fun FavoriteCollectionsGrid(modifier: Modifier = Modifier) {
 // BLOQUE DE LAS VISTAS PREVIAS
 @Composable
 @Preview(showBackground = true, backgroundColor = 0xFFF5F0EE)
-fun SearchBarPreview() {
+fun HomeScreenPreview() {
     BasicLayoutsCodelabTheme {
-        Surface {
-            SearchBar(modifier = Modifier.padding(10.dp))
-        }
-    }
-}
-
-@Composable
-@Preview(showBackground = true, backgroundColor = 0xFFF5F0EE)
-fun HomeSectionPreview() {
-    BasicLayoutsCodelabTheme {
-        Surface {
-            Column {
-                HomeSection(R.string.align_your_body) {
-                    AlignYourBodyRow(modifier = Modifier)
-                }
-                HomeSection(R.string.favorite_collections) {
-                    FavoriteCollectionsGrid(modifier = Modifier)
-                }
-            }
-        }
+        HomeScreen()
     }
 }
 
