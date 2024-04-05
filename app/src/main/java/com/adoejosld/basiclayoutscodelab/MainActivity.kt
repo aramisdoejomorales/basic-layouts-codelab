@@ -23,11 +23,18 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -48,15 +55,24 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             BasicLayoutsCodelabTheme {
-                HomeScreen()
+                MySootheAppPortrait()
             }
         }
     }
 }
 
 @Composable
+fun MySootheAppPortrait() {
+    BasicLayoutsCodelabTheme {
+        Scaffold(bottomBar = { SootheBottomNavigation() }) { padding ->
+            HomeScreen(Modifier.padding(padding))
+        }
+    }
+}
+
+@Composable
 fun HomeScreen(modifier: Modifier = Modifier) {
-    Column(modifier) {
+    Column(modifier.verticalScroll(rememberScrollState())) {
         Spacer(modifier = Modifier.height(16.dp))
         SearchBar(modifier = Modifier.padding(horizontal = 12.dp))
         HomeSection(title = R.string.align_your_body) {
@@ -221,13 +237,40 @@ fun FavoriteCollectionsGrid(modifier: Modifier = Modifier) {
     }
 }
 
+@Composable
+private fun SootheBottomNavigation(modifier: Modifier = Modifier) {
+    NavigationBar(containerColor = MaterialTheme.colorScheme.surfaceVariant, modifier = modifier) {
+        NavigationBarItem(
+            selected = true,
+            onClick = { },
+            icon = { Icon(imageVector = Icons.Default.Home, contentDescription = null) }, label = {
+                Text(
+                    stringResource(R.string.bottom_navigation_home)
+                )
+            }
+        )
+        NavigationBarItem(
+            selected = false,
+            onClick = { },
+            icon = { Icon(imageVector = Icons.Default.AccountCircle, contentDescription = null) },
+            label = {
+                Text(
+                    stringResource(R.string.bottom_navigation_profile)
+                )
+            }
+        )
+    }
+}
+
 // BLOQUE DE LAS VISTAS PREVIAS
 @Composable
 @Preview(showBackground = true, backgroundColor = 0xFFF5F0EE)
 fun HomeScreenPreview() {
     BasicLayoutsCodelabTheme {
-        HomeScreen()
+        MySootheAppPortrait()
     }
 }
+
+
 
 
