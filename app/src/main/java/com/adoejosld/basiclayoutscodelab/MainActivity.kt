@@ -19,6 +19,9 @@ import androidx.compose.foundation.layout.paddingFromBaseline
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyHorizontalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
@@ -50,11 +53,7 @@ class MainActivity : ComponentActivity() {
                     Spacer(modifier = Modifier.height(12.dp))
                     AlignYourBodyRow(modifier = Modifier)
                     Spacer(modifier = Modifier.height(12.dp))
-                    FavoriteCollectionCard(
-                        drawable = R.drawable.fc2_nature_meditations,
-                        text = R.string.fc2_nature_meditations,
-                        modifier = Modifier
-                    )
+                    FavoriteCollectionsGrid()
                 }
             }
         }
@@ -176,6 +175,25 @@ fun FavoriteCollectionCard(
     }
 }
 
+@Composable
+fun FavoriteCollectionsGrid(modifier: Modifier = Modifier) {
+    LazyHorizontalGrid(
+        rows = GridCells.Fixed(2),
+        contentPadding = PaddingValues(horizontal = 16.dp),
+        horizontalArrangement = Arrangement.spacedBy(16.dp),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+        modifier = modifier.height(168.dp)
+    ) {
+        items(favoriteCollectionsData) { item ->
+            FavoriteCollectionCard(
+                item.drawable,
+                item.text,
+                modifier = Modifier.height(80.dp)
+            )
+        }
+    }
+}
+
 // BLOQUE DE LAS VISTAS PREVIAS
 @Composable
 @Preview(showBackground = true, backgroundColor = 0xFFF5F0EE)
@@ -201,14 +219,10 @@ fun AlignYourBodyRowPreview() {
 
 @Composable
 @Preview(showBackground = true, backgroundColor = 0xFFF5F0EE)
-fun FavoriteCollectionCardPreview() {
+fun FavoriteCollectionGridPreview() {
     BasicLayoutsCodelabTheme {
         Surface {
-            FavoriteCollectionCard(
-                drawable = R.drawable.fc2_nature_meditations,
-                text = R.string.fc2_nature_meditations,
-                modifier = Modifier.padding(10.dp)
-            )
+            FavoriteCollectionsGrid()
         }
     }
 }
