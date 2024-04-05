@@ -51,12 +51,33 @@ class MainActivity : ComponentActivity() {
                 Column(modifier = Modifier) {
                     SearchBar(modifier = Modifier)
                     Spacer(modifier = Modifier.height(12.dp))
-                    AlignYourBodyRow(modifier = Modifier)
-                    Spacer(modifier = Modifier.height(12.dp))
-                    FavoriteCollectionsGrid()
+                    HomeSection(title = R.string.align_your_body) {
+                        AlignYourBodyRow(modifier = Modifier)
+                    }
+                    HomeSection(title = R.string.favorite_collections) {
+                        FavoriteCollectionsGrid(modifier = Modifier)
+                    }
                 }
             }
         }
+    }
+}
+
+@Composable
+fun HomeSection(
+    @StringRes title: Int,
+    modifier: Modifier = Modifier,
+    content: @Composable () -> Unit
+) {
+    Column(modifier) {
+        Text(
+            stringResource(id = title),
+            style = MaterialTheme.typography.titleMedium,
+            modifier = Modifier
+                .paddingFromBaseline(top = 40.dp, bottom = 16.dp)
+                .padding(16.dp)
+        )
+        content()
     }
 }
 
@@ -182,7 +203,7 @@ fun FavoriteCollectionsGrid(modifier: Modifier = Modifier) {
         contentPadding = PaddingValues(horizontal = 16.dp),
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
-        modifier = modifier.height(168.dp)
+        modifier = modifier.height(180.dp)
     ) {
         items(favoriteCollectionsData) { item ->
             FavoriteCollectionCard(
@@ -207,23 +228,19 @@ fun SearchBarPreview() {
 
 @Composable
 @Preview(showBackground = true, backgroundColor = 0xFFF5F0EE)
-fun AlignYourBodyRowPreview() {
+fun HomeSectionPreview() {
     BasicLayoutsCodelabTheme {
         Surface {
-            AlignYourBodyRow(
-                modifier = Modifier.padding(10.dp)
-            )
+            Column {
+                HomeSection(R.string.align_your_body) {
+                    AlignYourBodyRow(modifier = Modifier)
+                }
+                HomeSection(R.string.favorite_collections) {
+                    FavoriteCollectionsGrid(modifier = Modifier)
+                }
+            }
         }
     }
 }
 
-@Composable
-@Preview(showBackground = true, backgroundColor = 0xFFF5F0EE)
-fun FavoriteCollectionGridPreview() {
-    BasicLayoutsCodelabTheme {
-        Surface {
-            FavoriteCollectionsGrid()
-        }
-    }
-}
 
