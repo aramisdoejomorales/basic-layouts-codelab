@@ -163,7 +163,7 @@ fun FavoriteCollectionCard(
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
-                    .size(80.dp)
+                    .size(70.dp)
                     .clip(CircleShape)
             )
             Text(
