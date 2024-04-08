@@ -59,10 +59,15 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             BasicLayoutsCodelabTheme {
-                MySootheAppPortrait()
+                MySootheApp()
             }
         }
     }
+}
+
+@Composable
+fun MySootheApp() {
+    MySootheAppPortrait()
 }
 
 @Composable
