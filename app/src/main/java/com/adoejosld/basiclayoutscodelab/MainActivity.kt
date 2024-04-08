@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
@@ -34,6 +35,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationRail
+import androidx.compose.material3.NavigationRailItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -51,6 +54,7 @@ import androidx.compose.ui.unit.dp
 import com.adoejosld.basiclayoutscodelab.ui.theme.BasicLayoutsCodelabTheme
 
 class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -66,6 +70,18 @@ fun MySootheAppPortrait() {
     BasicLayoutsCodelabTheme {
         Scaffold(bottomBar = { SootheBottomNavigation() }) { padding ->
             HomeScreen(Modifier.padding(padding))
+        }
+    }
+}
+
+@Composable
+fun MySootheAppLandscape() {
+    BasicLayoutsCodelabTheme {
+        Surface(color = MaterialTheme.colorScheme.background) {
+            Row {
+                SootheNavigationRail()
+                HomeScreen()
+            }
         }
     }
 }
@@ -262,12 +278,62 @@ private fun SootheBottomNavigation(modifier: Modifier = Modifier) {
     }
 }
 
+@Composable
+private fun SootheNavigationRail(modifier: Modifier = Modifier) {
+    NavigationRail(
+        modifier = modifier.padding(start = 8.dp, end = 8.dp),
+        containerColor = MaterialTheme.colorScheme.background,
+    ) {
+        Column(
+            modifier = modifier.fillMaxHeight(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            NavigationRailItem(
+                icon = {
+                    Icon(
+                        imageVector = Icons.Default.Home,
+                        contentDescription = null
+                    )
+                },
+                label = {
+                    Text(stringResource(R.string.bottom_navigation_home))
+                },
+                selected = true,
+                onClick = {}
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+            NavigationRailItem(
+                icon = {
+                    Icon(
+                        imageVector = Icons.Default.AccountCircle,
+                        contentDescription = null
+                    )
+                },
+                label = {
+                    Text(stringResource(R.string.bottom_navigation_profile))
+                },
+                selected = false,
+                onClick = {}
+            )
+        }
+    }
+}
+
 // BLOQUE DE LAS VISTAS PREVIAS
 @Composable
 @Preview(showBackground = true, backgroundColor = 0xFFF5F0EE)
 fun HomeScreenPreview() {
     BasicLayoutsCodelabTheme {
         MySootheAppPortrait()
+    }
+}
+
+@Composable
+@Preview(showBackground = true, backgroundColor = 0xFFF5F0EE)
+fun MySootheAppLandscapePreview() {
+    BasicLayoutsCodelabTheme {
+        MySootheAppLandscape()
     }
 }
 
